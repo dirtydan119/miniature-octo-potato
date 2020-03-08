@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block content %}
+
+<p></p>
+<div class="container">
+  <div class="jumbotron">
+    <h1>Currency Conversion</h1>
+  <h4>
+    {% if currency and amount %}
+      Currently converting {{amount}} {{currency}}
+    {% else %}
+      Please enter the currency info below:
+    {% endif %}
+  </h4>
+  <form method="post">
+    {{form.hidden_tag()}}
+    {{form.currency.label}}{{form.currency}}
+    {{form.amount.label}}{{form.amount}}
+    {{form.submit()}}
+  </form>
+  <p></p>
+    {% for item in all_currencies if all_currencies and item in desired_currencies %}
+      <div class="card" style="width: 18rem;">
+        <div class="card-body">
+          <h5 class="card-title">{{desired_currencies[item]}}</h5>
+          <h6 class="card-subtitle mb-2 text-muted">{{item}}</h6>
+          <p class="card-text">{{(json_object["rates"][item])|round(2) * float_amount}}</p>
+        </div>
+      </div>
+    {% endfor %}
+  <p></p>
+  </div>
+</div>
+
+
+{% endblock %}
